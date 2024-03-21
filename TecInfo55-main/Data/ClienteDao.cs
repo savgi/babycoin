@@ -23,11 +23,11 @@ namespace Data
         {
             using (SqlConnection conexaobd = new SqlConnection(_conexao))
             {
-                string sql = "insert int Clientes (nome,profissao,setor) values (@nome,@profissao,@obs)";
+                string sql = "insert int Clientes (nome,profissao,setor,obs) values (@nome,@profissao,@setor,@obs)";
 
 
 
-                using (SqlCommand comando = new SqlCommand(_conexao))
+                using (SqlCommand comando = new SqlCommand(sql,conexaobd))
                 {
                     comando.Parameters.AddWithValue("@nome", cliente.Nome);
                     comando.Parameters.AddWithValue("@profissao", cliente.Profissao);
@@ -41,7 +41,7 @@ namespace Data
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception("Erro ao inxluir Cliente:" + ex.Message);
+                        throw new Exception("Erro ao excluir Cliente:" + ex.Message);
                     }
                 }
             }
