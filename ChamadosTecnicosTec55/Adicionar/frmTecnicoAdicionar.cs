@@ -21,52 +21,41 @@ namespace ChamadosTecnicosTec55.Adicionar
             InitializeComponent();
         }
 
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnLimpar_Click(object sender, EventArgs e)
-        {
-            txbNome.Clear();
-            txbEspecialidade.Clear();
-            txbEmail.Clear();
-            txbObs.Clear();
-            txbSenha.Clear();
-        }
-
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            // Chama o objeto Cliente
             Tecnico tecnico = new Tecnico();
-            TecnicoDao tecnicoDao = new TecnicoDao(_conexao);
+            TecnicoDao tecnicodao = new TecnicoDao(_conexao);
 
-            if (string.IsNullOrEmpty(txbNome.Text) || string.IsNullOrEmpty(txbEspecialidade.Text) || string.IsNullOrEmpty(txbEmail.Text) || string.IsNullOrEmpty(txbSenha.Text) || string.IsNullOrEmpty(txbObs.Text))
+            if (string.IsNullOrWhiteSpace(txbNome.Text) || string.IsNullOrWhiteSpace(txbEspecialidade.Text) || string.IsNullOrWhiteSpace(txbEmail.Text) || string.IsNullOrWhiteSpace(txbSenha.Text) || string.IsNullOrWhiteSpace(txbObs.Text))
             {
                 MessageBox.Show("CADE OS DADOSSS ??");
             }
             else
             {
+                // TODA VEZ QUE MEXER COM BD USAR TRY
                 try
                 {
+                    // Preenche o Objeto Cliente
                     tecnico.Nome = txbNome.Text;
                     tecnico.Especialidade = txbEspecialidade.Text;
                     tecnico.Email = txbEmail.Text;
                     tecnico.Senha = txbSenha.Text;
                     tecnico.Obs = txbObs.Text;
 
-                    tecnicoDao.IncluiTecnico(tecnico);
-                    MessageBox.Show("Cadastrado com sucesso!");
+                    // CHAMA O DAO para incluir o cliente
+                    tecnicodao.IncluiTecnico(tecnico);
+
+                    MessageBox.Show("Cadastrado com sucesso !");
+
                     this.Close();
 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Erro ao Cadastrar", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Erro ao Cadastrar" + ex, "Atenção",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
                 }
             }
         }

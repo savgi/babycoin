@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data; // ADO.net
-using System.Data.SqlClient;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.AccessControl; // ADO para SQL SERVER
+using System.Data.SqlClient; // ADO para SQL SERVER
 
 namespace Data
 {
@@ -21,20 +19,19 @@ namespace Data
             _conexao = conexao;
         }
 
-        // Inserir Cliente Vulgo XUXAR
         public void IncluiTecnico(Tecnico tecnico)
         {
             using(SqlConnection conexaoBd = new SqlConnection(_conexao))
             {
-                string sql = "insert into Tecnicos (nome,especialidade,email,obs,senha) values (@nome,@especialidade,@email,@obs,@senha)";
+                string sql = "insert into Tecnicos (nome,especialidade,email,senha,obs) values (@nome,@especialdiade,@email,@senha,@obs)";
 
                 using (SqlCommand comando = new SqlCommand(sql, conexaoBd))
                 {
                     comando.Parameters.AddWithValue("@nome", tecnico.Nome);
-                    comando.Parameters.AddWithValue("@especialidade", tecnico.Especialidade);
+                    comando.Parameters.AddWithValue("@especialdiade", tecnico.Especialidade);
                     comando.Parameters.AddWithValue("@email", tecnico.Email);
-                    comando.Parameters.AddWithValue("@obs", tecnico.Obs);
                     comando.Parameters.AddWithValue("@senha", tecnico.Senha);
+                    comando.Parameters.AddWithValue("@obs", tecnico.Obs);
 
                     try
                     {
